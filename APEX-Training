@@ -1,0 +1,2953 @@
+APEX TRAINING
+
+CTRL + E = Openr execute anonymous Window
+
+========================================================
+2. Variables in APEX
+========================================================
+
+// Variable Daclaration is used to store data
+SOQL Query
+Loop Statement
+Flow control statement
+DML Statement - Data Manipulation Language
+//
+
+
+//Data Type, Variable name, variable value, variable declaration (type, name, value)
+//Variable without any value has by default value of 'null'
+
+
+String firstname='Michal';
+String lastname='Dabrowski';
+Integer num1=32;
+
+System.debug(firstname+ ' ' +lastname); // Michal Dabrowski
+
+/*
+comments section
+*/
+
+String name='Michal';
+name=32;
+System.debug('My name is:'+name); // Illegal assignment from Integer to String
+
+=========================================================
+
+Integer firstNum=(10+6)*(5+2);//112
+Integer secNum=50*10; //500
+Integer thirdNum=10; //10
+Integer proof=16*7; //112
+Integer total=(firstNum+SecNum+thirdNum); //622
+Integer total_proof=((10+6)*(5+2)+(50*10)+10); //622 
+Integer total_proof2=total_proof;
+//Integer fourthNum=10.2; --> Illegal assignment from Integer to Decimal
+
+System.debug('First number='+firstNum+'='+proof);
+System.debug('Second number='+secNum);
+System.debug('Third number='+thirdNum);
+
+System.debug('Total='+total);
+System.debug('Total='+Total_proof);
+
+// Variables are case INsensitive
+
+Integer fifthNum, sixthNum, seventhNum, eight; // variables can be daclared in commonly, value can be provided later
+fifthnum=5;
+sixthnum=6;
+seventhNum=7;
+String novalue;
+
+total=(fifthNum+ sixthNum+seventhNum); //18
+System.debug('5 number='+fifthNum);
+System.debug('6 number='+sixthNum);
+System.debug('7number='+seventhNum);
+System.debug('Total='+total);
+System.debug('8='+eight+' '+novalue); //variables without value display 'null', no matter what data type
+
+================================================================
+
+/*
+simpleinterest=(pr*r*noofyears)/100
+*/
+
+integer principal=1000, numofyears=5;
+Decimal rate=5.7;
+DEcimal SI=(principal*rate*numofyears)/100;
+System.debug('Simple interest is: '+((principal*rate*numofyears)/100)+' = '+SI);
+
+// different methods of declaring variables
+
+=================================================================
+3. Primitive data types in APEX
+=================================================================
+
+Data types available in APEX
+
+Primitive (Integer, Double, Long, Decimal, Date, Datetime, String, ID, Boolean)
+Collections (Lists, Sets, Maps)
+sObject
+Enums
+Classes, Objects, Interfaces
+
+
+Integer - 32-bit number without decimal point
+Long -  64-bit number without decimal point
+Decimal -  number that includes decimal point
+Double - 64-bit number that includes decimal point
+
+Boolean - only true, false or null
+Date -  indicates particular day, no information about time
+Time - stores time (hrs, minutes, second, milliseconds)
+Datetime - stores both date and time
+
+=======================================================
+
+Date
+
+
+Date Methods
+The following are methods for Date.
+
+addDays(additionalDays) - Adds the specified number of additional days to a Date.
+addMonths(additionalMonths) - Adds the specified number of additional months to a Date
+addYears(additionalYears) - Adds the specified number of additional years to a Date
+day() - Returns the day-of-month component of a Date.
+dayOfYear() - Returns the day-of-year component of a Date.
+daysBetween(secondDate) - Returns the number of days between the Date that called the method and the specified date.
+daysInMonth(year, month) - Returns the number of days in the month for the specified year and month (1=Jan).
+format() - Returns the Date as a string using the locale of the context user
+isLeapYear(year) - Returns true if the specified year is a leap year.
+isSameDay(dateToCompare) - Returns true if the Date that called the method is the same as the specified date.
+month() - Returns the month component of a Date (1=Jan).
+monthsBetween(secondDate) - Returns the number of months between the Date that called the method and the specified date, ignoring the difference in days.
+newInstance(year, month, day) - Constructs a Date from Integer representations of the year, month (1=Jan), and day.
+parse(stringDate) - Constructs a Date from a String. The format of the String depends on the local date format.
+today() - Returns the current date in the current user's time zone.
+toStartOfMonth() - Returns the first of the month for the Date that called the method.
+toStartOfWeek() - Returns the start of the week for the Date that called the method, depending on the context user's locale.
+valueOf(stringDate) - Returns a Date that contains the value of the specified String.
+valueOf(fieldValue) - Converts the specified object to a Date. Use this method to convert a history tracking field value or an object that represents a Date value.
+year() - Returns the year component of a Date
+
+==================================================
+
+Date newDate=Date.newInstance(2019,7,14); //newInstance(year, month, day) method
+System.debug('Date is ' + newDate);
+Date today=Date.today();
+
+//Date is a class in SFDC and has different methods
+
+Integer newDate1=today.month();
+System.debug('Month is: ' + newDate1);
+
+Date add3years=today.addYears(3); // addYears() method
+Date plus3months=add3years.addMonths(3); // addMonths() method
+
+System.debug('Today + 3 years is:' + add3years);
+System.debug('Today + 3 years + 3 months is:' + plus3months);
+
+
+Integer difference=today.daysBetween(plus3months); //daysBetween(seconddate) method
+
+System.debug('Difference in days:' + difference); 
+System.debug('Difference in days:'+ today.daysBetween(plus3months)); // different ways of displaying daysBetween() method result
+
+Date proofDate=today.addDays(difference); // addDays(Integer) method
+System.debug(proofDate +' = ' +plus3months);
+
+Date add1year=today.addYears(1); // addYears() method
+Integer todayyear=add1year.year(); // year extracted from today and converted to Integer
+Boolean isLeapYr=Date.isLeapYear(todayyear); //isLeapYear(Integer) method
+
+System.debug('Is leap year:' +isLeapYr);
+
+======================================================
+
+
+Time
+
+
+The following are methods for Time.
+
+addHours(additionalHours) - Adds the specified number of hours to a Time.
+addMilliseconds(additionalMilliseconds) - Adds the specified number of milliseconds to a Time.
+addMinutes(additionalMinutes) - Adds the specified number of minutes to a Time.
+addSeconds(additionalSeconds) - Adds the specified number of seconds to a Time.
+hour() - Returns the hour component of a Time.
+millisecond() - Returns the millisecond component of a Time.
+minute() - Returns the minute component of a Time.
+newInstance(hour, minutes, seconds, milliseconds) - Constructs a Time from Integer representations of the specified hour, minutes, seconds, and milliseconds. (UTC is assumed.)
+second() - Returns the second component of a Time.
+
+
+======================================================
+
+Time myTime=Time.newInstance(6,12,4,12); // newInstance method
+System.debug('Time is '+ myTime);
+
+Time myTime2=myTime.addHours(2); //addHours(integer) method
+System.debug('myTime is:' +myTime);
+System.debug('myTime2 is:' +myTime2);
+
+Time myTime3=myTime2.addminutes(20);//addMinutes(integer) method
+System.debug('myTime3 is:' +myTime3);
+
+Time myTime4=myTime2.addminutes(120);//increments hours
+System.debug('myTime4 is:' +myTime4);
+
+=======================================================
+
+Datetime
+
+The following are methods for Datetime.
+
+addDays(additionalDays) - Adds the specified number of days to a Datetime.
+addHours(additionalHours) - Adds the specified number of hours to a Datetime.
+addMinutes(additionalMinutes) - Adds the specified number of minutes to a Datetime.
+addMonths(additionalMonths) - Adds the specified number of months to a Datetime.
+addSeconds(additionalSeconds) - Adds the specified number of seconds to a Datetime.
+addYears(additionalYears) - Adds the specified number of years to a Datetime.
+date() - Returns the Date component of a Datetime in the local time zone of the context user.
+dateGMT() - Return the Date component of a Datetime in the GMT time zone.
+day() - Returns the day-of-month component of a Datetime in the local time zone of the context user.
+dayGmt() - Returns the day-of-month component of a Datetime in the GMT time zone.
+dayOfYear() - Returns the day-of-year component of a Datetime in the local time zone of the context user.
+dayOfYearGmt() - Returns the day-of-year component of a Datetime in the GMT time zone.
+format() - Converts the date to the local time zone and returns the converted date as a formatted string using the locale of the context user. If the time zone cannot be determined, GMT is used.
+format(dateFormatString) - Converts the date to the local time zone and returns the converted date as a string using the supplied Java simple date format. If the time zone cannot be determined, GMT is used.
+format(dateFormatString, timezone) - Converts he date to the specified time zone and returns the converted date as a string using the supplied Java simple date format. If the supplied time zone is not in the correct format, GMT is used.
+formatGmt(dateFormatString) - Returns a Datetime as a string using the supplied Java simple date format and the GMT time zone.
+formatLong() - Converts the date to the local time zone and returns the converted date in long date format.
+getTime() - Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this DateTime object.
+hour() - Returns the hour component of a Datetime in the local time zone of the context user.
+hourGmt() - Returns the hour component of a Datetime in the GMT time zone.
+isSameDay(dateToCompare) - Returns true if the Datetime that called the method is the same as the specified Datetime in the local time zone of the context user.
+millisecond() - Return the millisecond component of a Datetime in the local time zone of the context user.
+millisecondGmt() - Return the millisecond component of a Datetime in the GMT time zone.
+minute() - Returns the minute component of a Datetime in the local time zone of the context user.
+minuteGmt() - Returns the minute component of a Datetime in the GMT time zone.
+month() - Returns the month component of a Datetime in the local time zone of the context user (1=Jan).
+monthGmt() - Returns the month component of a Datetime in the GMT time zone (1=Jan).
+newInstance(milliseconds) - Constructs a Datetime and initializes it to represent the specified number of milliseconds since January 1, 1970, 00:00:00 GMT.
+newInstance(date, time) - Constructs a DateTime from the specified date and time in the local time zone.
+newInstance(year, month, day) - Constructs a Datetime from Integer representations of the specified year, month (1=Jan), and day at midnight in the local time zone.
+newInstance(year, month, day, hour, minute, second) - Constructs a Datetime from Integer representations of the specified year, month (1=Jan), day, hour, minute, and second in the local time zone.
+newInstanceGmt(date, time) - Constructs a DateTime from the specified date and time in the GMT time zone.
+newInstanceGmt(year, month, date) - Constructs a Datetime from Integer representations of the specified year, month (1=Jan), and day at midnight in the GMT time zone
+newInstanceGmt(year, month, date, hour, minute, second) - Constructs a Datetime from Integer representations of the specified year, month (1=Jan), day, hour, minute, and second in the GMT time zone
+now() - Returns the current Datetime based on a GMT calendar.
+parse(datetimeString) - Constructs a Datetime from the given String in the local time zone and in the format of the user locale.
+second() - Returns the second component of a Datetime in the local time zone of the context user.
+secondGmt() - Returns the second component of a Datetime in the GMT time zone.
+time() - Returns the time component of a Datetime in the local time zone of the context user.
+timeGmt() - Returns the time component of a Datetime in the GMT time zone.
+valueOf(dateTimeString) - Returns a Datetime that contains the value of the specified string.
+valueOf(fieldValue) - Converts the specified object to a Datetime. Use this method to convert a history tracking field value or an object that represents a Datetime value.
+valueOfGmt(dateTimeString) - Returns a Datetime that contains the value of the specified String.
+year() - Returns the year component of a Datetime in the local time zone of the context user.
+yearGmt() - Returns the year component of a Datetime in the GMT time zone.
+
+===================================================
+
+Datetime MyDateTime=Datetime.newInstance(2019,3,12,8,10,00); // newInstance method, returns value in GMT format
+System.debug('myDateTime: '+MyDateTime);
+
+Datetime myDateTime2=MyDateTime.addHours(18); // addHours() / addMinutes() / addDays() methods
+System.debug('myDateTime2: '+MyDateTime2);
+
+Date myDate=MyDateTime.Date();
+System.debug('Only Date: '+MyDate); // Date() method extracts date. Time wil be replaced with 0s
+System.debug('Only Time: '+MyDateTime2.Time()); // Time() method extracts time
+
+/*
+Format method -  converts format to local time zone and returns as String data type
+*/
+
+String LocaltimeString=MyDateTime2.format();
+System.debug('Formatted Date '+ LocaltimeString);
+System.debug('Formatted Date '+ MyDateTime2.format());
+
+====================================================
+
+String 
+
+String Methods
+The following are methods for String.
+
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_methods_system_string.htm#apex_methods_system_string
+
+abbreviate(maxWidth) - Returns an abbreviated version of the String, of the specified length and with ellipses appended if the current String is longer than the specified length; otherwise, returns the original String without ellipses.
+abbreviate(maxWidth, offset) - Returns an abbreviated version of the String, starting at the specified character offset and of the specified length. The returned String has ellipses appended at the start and the end if characters have been removed at these locations.
+capitalize() - Returns the current String with the first letter changed to title case.
+center(size) - Returns a version of the current String of the specified size padded with spaces on the left and right, so that it appears in the center. If the specified size is smaller than the current String size, the entire String is returned without added spaces.
+center(size, paddingString) - Returns a version of the current String of the specified size padded with the specified String on the left and right, so that it appears in the center. If the specified size is smaller than the current String size, the entire String is returned without padding.
+charAt(index) - Returns the value of the character at the specified index.
+codePointAt(index) - Returns the Unicode code point value at the specified index.
+codePointBefore(index) - Returns the Unicode code point value that occurs before the specified index.
+codePointCount(beginIndex, endIndex) - Returns the number of Unicode code points within the specified text range.
+compareTo(secondString) - Compares two strings lexicographically, based on the Unicode value of each character in the Strings.
+contains(substring) - Returns true if and only if the String that called the method contains the specified sequence of characters in substring.
+containsAny(inputString) - Returns true if the current String contains any of the characters in the specified String; otherwise, returns false.
+containsIgnoreCase(substring) - Returns true if the current String contains the specified sequence of characters without regard to case; otherwise, returns false.
+containsNone(inputString) - Returns true if the current String doesn’t contain any of the characters in the specified String; otherwise, returns false.
+containsOnly(inputString) - Returns true if the current String contains characters only from the specified sequence of characters and not any other characters; otherwise, returns false.
+containsWhitespace() - Returns true if the current String contains any white space characters; otherwise, returns false.
+countMatches(substring) - Returns the number of times the specified substring occurs in the current String.
+deleteWhitespace() - Returns a version of the current String with all white space characters removed.
+difference(secondString) - Returns the difference between the current String and the specified String.
+endsWith(suffix) - Returns true if the String that called the method ends with the specified suffix.
+endsWithIgnoreCase(suffix) - Returns true if the current String ends with the specified suffix; otherwise, returns false.
+equals(secondString) - Deprecated. This method is replaced by equals(stringOrId). Returns true if the passed-in string is not null and represents the same binary sequence of characters as the current string. Use this method to perform case-sensitive comparisons.
+equals(stringOrId) - Returns true if the passed-in object is not null and represents the same binary sequence of characters as the current string. Use this method to compare a string to an object that represents a string or an ID.
+equalsIgnoreCase(secondString) - Returns true if the secondString is not null and represents the same sequence of characters as the String that called the method, ignoring case.
+escapeCsv() - Returns a String for a CSV column enclosed in double quotes, if required.
+escapeEcmaScript() - Escapes the characters in the String using EcmaScript String rules.
+escapeHtml3() - Escapes the characters in a String using HTML 3.0 entities.
+escapeHtml4() - Escapes the characters in a String using HTML 4.0 entities.
+escapeJava() - Returns a String whose characters are escaped using Java String rules. Characters escaped include quotes and control characters, such as tab, backslash, and carriage return characters.
+escapeSingleQuotes(stringToEscape) - Returns a String with the escape character (\) added before any single quotation marks in the String s.
+escapeUnicode() - Returns a String whose Unicode characters are escaped to a Unicode escape sequence.
+escapeXml() - Escapes the characters in a String using XML entities.
+format(stringToFormat, formattingArguments) - Treat the first argument as a pattern and return a string using the second argument for substitution and formatting. The substitution and formatting are the same as apex:outputText and the Java MessageFormat class. Non-string types in the second argument’s List are implicitly converted to strings, respecting the toString() method overrides that exist on the type.
+fromCharArray(charArray) - Returns a String from the values of the list of integers.
+getChars() - Returns an array of character values that represent the characters in this string.
+getCommonPrefix(strings) - Returns the initial sequence of characters as a String that is common to all the specified Strings.
+getLevenshteinDistance(stringToCompare)
+Returns the Levenshtein distance between the current String and the specified String.
+getLevenshteinDistance(stringToCompare, threshold)
+Returns the Levenshtein distance between the current String and the specified String if it is less than or equal than the given threshold; otherwise, returns -1.
+hashCode()
+Returns a hash code value for this string.
+indexOf(substring)
+Returns the index of the first occurrence of the specified substring. If the substring does not occur, this method returns -1.
+indexOf(substring, index)
+Returns the zero-based index of the first occurrence of the specified substring from the point of the given index. If the substring does not occur, this method returns -1.
+indexOfAny(substring)
+Returns the zero-based index of the first occurrence of any character specified in the substring. If none of the characters occur, returns -1.
+indexOfAnyBut(substring)
+Returns the zero-based index of the first occurrence of a character that is not in the specified substring. Otherwise, returns -1.
+indexOfChar(character)
+Returns the index of the first occurrence of the character that corresponds to the specified character value.
+indexOfChar(character, startIndex)
+Returns the index of the first occurrence of the character that corresponds to the specified character value, starting from the specified index.
+indexOfDifference(stringToCompare)
+Returns the zero-based index of the character where the current String begins to differ from the specified String.
+indexOfIgnoreCase(substring)
+Returns the zero-based index of the first occurrence of the specified substring without regard to case. If the substring does not occur, this method returns -1.
+indexOfIgnoreCase(substring, startPosition)
+Returns the zero-based index of the first occurrence of the specified substring from the point of index i, without regard to case. If the substring does not occur, this method returns -1.
+isAllLowerCase()
+Returns true if all characters in the current String are lowercase; otherwise, returns false.
+isAllUpperCase()
+Returns true if all characters in the current String are uppercase; otherwise, returns false.
+isAlpha()
+Returns true if all characters in the current String are Unicode letters only; otherwise, returns false.
+isAlphaSpace()
+Returns true if all characters in the current String are Unicode letters or spaces only; otherwise, returns false.
+isAlphanumeric()
+Returns true if all characters in the current String are Unicode letters or numbers only; otherwise, returns false.
+isAlphanumericSpace()
+Returns true if all characters in the current String are Unicode letters, numbers, or spaces only; otherwise, returns false.
+isAsciiPrintable()
+Returns true if the current String contains only ASCII printable characters; otherwise, returns false.
+isBlank(inputString)
+Returns true if the specified String is white space, empty (''), or null; otherwise, returns false.
+isEmpty(inputString)
+Returns true if the specified String is empty ('') or null; otherwise, returns false.
+isNotBlank(inputString)
+Returns true if the specified String is not whitespace, not empty (''), and not null; otherwise, returns false.
+isNotEmpty(inputString)
+Returns true if the specified String is not empty ('') and not null; otherwise, returns false.
+isNumeric()
+Returns true if the current String contains only Unicode digits; otherwise, returns false.
+isNumericSpace()
+Returns true if the current String contains only Unicode digits or spaces; otherwise, returns false.
+isWhitespace()
+Returns true if the current String contains only white space characters or is empty; otherwise, returns false.
+join(iterableObj, separator)
+Joins the elements of the specified iterable object, such as a List, into a single String separated by the specified separator.
+lastIndexOf(substring)
+Returns the index of the last occurrence of the specified substring. If the substring does not occur, this method returns -1.
+lastIndexOf(substring, endPosition)
+Returns the index of the last occurrence of the specified substring, starting from the character at index 0 and ending at the specified index.
+lastIndexOfChar(character)
+Returns the index of the last occurrence of the character that corresponds to the specified character value.
+lastIndexOfChar(character, endIndex)
+Returns the index of the last occurrence of the character that corresponds to the specified character value, starting from the specified index.
+lastIndexOfIgnoreCase(substring)
+Returns the index of the last occurrence of the specified substring regardless of case.
+lastIndexOfIgnoreCase(substring, endPosition)
+Returns the index of the last occurrence of the specified substring regardless of case, starting from the character at index 0 and ending at the specified index.
+left(length)
+Returns the leftmost characters of the current String of the specified length.
+leftPad(length)
+Returns the current String padded with spaces on the left and of the specified length.
+leftPad(length, padStr)
+Returns the current String padded with String padStr on the left and of the specified length.
+length()
+Returns the number of 16-bit Unicode characters contained in the String.
+mid(startIndex, length)
+Returns a new String that begins with the character at the specified zero-based startIndex with the number of characters specified by length.
+normalizeSpace()
+Returns the current String with leading, trailing, and repeating white space characters removed.
+offsetByCodePoints(index, codePointOffset)
+Returns the index of the Unicode code point that is offset by the specified number of code points, starting from the given index.
+remove(substring)
+Removes all occurrences of the specified substring and returns the String result.
+removeEnd(substring)
+Removes the specified substring only if it occurs at the end of the String.
+removeEndIgnoreCase(substring)
+Removes the specified substring only if it occurs at the end of the String using a case-insensitive match.
+removeStart(substring)
+Removes the specified substring only if it occurs at the beginning of the String.
+removeStartIgnoreCase(substring)
+Removes the specified substring only if it occurs at the beginning of the String using a case-insensitive match.
+repeat(numberOfTimes)
+Returns the current String repeated the specified number of times.
+repeat(separator, numberOfTimes)
+Returns the current String repeated the specified number of times using the specified separator to separate the repeated Strings.
+replace(target, replacement)
+Replaces each substring of a string that matches the literal target sequence target with the specified literal replacement sequence replacement.
+replaceAll(regExp, replacement)
+Replaces each substring of a string that matches the regular expression regExp with the replacement sequence replacement.
+replaceFirst(regExp, replacement)
+Replaces the first substring of a string that matches the regular expression regExp with the replacement sequence replacement.
+reverse()
+Returns a String with all the characters reversed.
+right(length)
+Returns the rightmost characters of the current String of the specified length.
+rightPad(length)
+Returns the current String padded with spaces on the right and of the specified length.
+rightPad(length, padStr)
+Returns the current String padded with String padStr on the right and of the specified length.
+split(regExp)
+Returns a list that contains each substring of the String that is terminated by either the regular expression regExp or the end of the String.
+split(regExp, limit)
+Returns a list that contains each substring of the String that is terminated by either the regular expression regExp or the end of the String.
+splitByCharacterType()
+Splits the current String by character type and returns a list of contiguous character groups of the same type as complete tokens.
+splitByCharacterTypeCamelCase()
+Splits the current String by character type and returns a list of contiguous character groups of the same type as complete tokens, with the following exception: the uppercase character, if any, immediately preceding a lowercase character token belongs to the following character token rather than to the preceding.
+startsWith(prefix)
+Returns true if the String that called the method begins with the specified prefix.
+startsWithIgnoreCase(prefix)
+Returns true if the current String begins with the specified prefix regardless of the prefix case.
+stripHtmlTags()
+Removes HTML markup and returns plain text.
+substring(startIndex)
+Returns a new String that begins with the character at the specified zero-based startIndex and extends to the end of the String.
+substring(startIndex, endIndex)
+Returns a new String that begins with the character at the specified zero-based startIndex and extends to the character at endIndex - 1.
+substringAfter(separator)
+Returns the substring that occurs after the first occurrence of the specified separator.
+substringAfterLast(separator)
+Returns the substring that occurs after the last occurrence of the specified separator.
+substringBefore(separator)
+Returns the substring that occurs before the first occurrence of the specified separator.
+substringBeforeLast(separator)
+Returns the substring that occurs before the last occurrence of the specified separator.
+substringBetween(tag)
+Returns the substring that occurs between two instances of the specified tag String.
+substringBetween(open, close)
+Returns the substring that occurs between the two specified Strings.
+swapCase()
+Swaps the case of all characters and returns the resulting String by using the default (English US) locale.
+toLowerCase()
+Converts all of the characters in the String to lowercase using the rules of the default (English US) locale.
+toLowerCase(locale)
+Converts all of the characters in the String to lowercase using the rules of the specified locale.
+toUpperCase()
+Converts all of the characters in the String to uppercase using the rules of the default (English US) locale.
+toUpperCase(locale)
+Converts all of the characters in the String to the uppercase using the rules of the specified locale.
+trim() - Returns a copy of the string that no longer contains any leading or trailing white space characters.
+uncapitalize() - Returns the current String with the first letter in lowercase.
+unescapeCsv() - Returns a String representing an unescaped CSV column.
+unescapeEcmaScript() - Unescapes any EcmaScript literals found in the String.
+unescapeHtml3() - Unescapes the characters in a String using HTML 3.0 entities.
+unescapeHtml4() - Unescapes the characters in a String using HTML 4.0 entities.
+unescapeJava() - Returns a String whose Java literals are unescaped. Literals unescaped include escape sequences for quotes (\\") and control characters, such as tab (\\t), and carriage return (\\n).
+unescapeUnicode() - Returns a String whose escaped Unicode characters are unescaped.
+unescapeXml() - Unescapes the characters in a String using XML entities.
+valueOf(dateToConvert) - Returns a String that represents the specified Date in the standard “yyyy-MM-dd” format.
+valueOf(datetimeToConvert) - Returns a String that represents the specified Datetime in the standard “yyyy-MM-dd HH:mm:ss” format for the local time zone.
+valueOf(decimalToConvert) - Returns a String that represents the specified Decimal.
+valueOf(doubleToConvert) - Returns a String that represents the specified Double.
+valueOf(integerToConvert) - Returns a String that represents the specified Integer.
+valueOf(longToConvert) - Returns a String that represents the specified Long.
+valueOf(toConvert) - Returns a string representation of the specified object argument.
+valueOfGmt(datetimeToConvert) - Returns a String that represents the specified Datetime in the standard “yyyy-MM-dd HH:mm:ss” format for the GMT time zone.
+
+
+==============================================================
+
+String name1='Michal';
+String name2, name3;
+Name2='100'; name3='false';
+
+// Indexing starts with 0 
+Integer IndexM=name1.indexOf('M'); // IndexOf() mehtod--> 0
+
+String s='michal Dabrowski';
+Integer brindex=s.indexOf('br');
+System.debug('indexM is: '+IndexM);
+System.debug('BRindex is: '+brindex);
+System.debug('Xindex is: '+s.Indexof('x')); // if value does not appear the method returns -1
+String s2=s.capitalize();
+System.debug('S2 capitalize: '+s2); // capitalize() capitalizes only first letter
+
+String s3='abcde';
+String s4='fghij';
+Integer compareResult=s3.compareTo(s4); //negative value
+Integer compareResult2=s4.compareTo(s3); //positive value value
+
+System.debug('CompareResult: '+compareResult);
+System.debug('CompareResult2: '+compareResult2);
+
+String s5='fghij';
+
+Integer result=s4.compareTo(s5);
+SYstem.debug('Result: '+result); // displays 0 because both values are equal
+
+Boolean isEqual=s4.equals(s5);    
+Boolean isntEqual=s3.equals(s5);    
+
+SYstem.debug('isEqual: '+isEqual );
+SYstem.debug('isntEqual: '+isntEqual );
+
+String s8='michal';
+System.debug('Upper-case: '+s8.toUppercase()); // toUpperCase() method to capitalize all -->MICHAL
+
+String s9='HELLO, HOW ARE YOU?';
+String s10=s9.toLowerCase();
+
+System.debug('Lower-case: '+s9.toLowerCase()); // toLowerCase() 
+System.debug('Lower-case capitalized: ' +s10.capitalize());
+
+String name='Michal';
+String space=' ';
+name2='Dabrowski';
+String fullname=name+space+name2; //Concatination with operator
+String stringToCheck='/';
+System.debug(fullname);
+System.debug('contains space? '+ fullname.contains(' ')); //contains() method
+System.debug('contains slash? '+ fullname.contains('/'));
+System.debug('contains space? '+ fullname.contains(space));
+System.debug('contains slash? '+ fullname.contains(stringToCheck));
+
+
+=================================================
+4. Operators in Apex
+=================================================
+
+Operate on Integer value
+=   x=y                 assginment operator
++=  x+=y    x=x+y
+*=  x*=y    x=x*y
+-=  x-=y    x=x-y
+/=  x/=y    x=x/y       division operator
+
+Operate on Boolean value
+|=  x|=y    x=x|y       OR assignment if x and y are false than result equals false. otherwise true
+&=  x&=y    x=x&y       if both true than result is true, otherwise false
+
+&&  x&&y                AND logical operator, true only when both are true. Short-circuiting behaviour means that y won't be executed if x doesn't equals true
+||  x||y                OR logical operator
+==  x==y                returns true if values are equal. Is CASE INSENSITIVE. IDs are CASE SENSITIVE and have to have same lenght.
+=== x===y               check whether x and y reference exactly the same location in memory
+++  x++                 Increment operator
+--  x--                 Decrement operator
+
+!=  x!=y                    Negation operator
+
+==================================================
+
+Integer result =100;
+
+result=result+10;
+System.debug('result +10: '+result); // 110
+
+result=result-5;
+System.debug('result -5: '+result); // 105
+
+result=result*10;
+System.debug('result *10: '+result); // 1050
+
+result= result/2;
+System.debug('result /2: '+result); // 525
+
+Integer output=200;
+output+=10;
+System.debug('output+=10 '+output); // 210
+
+output-=5;
+System.debug('output-=5 '+output); //205
+
+output*=10;
+System.debug('output*=10 '+output); //2050
+
+output/=2;
+System.debug('output/=2 '+output); //1025
+
+==================================================
+5. Conditional (If-Else) Statements
+==================================================
+
+-works similarly top Java
+-curly bracket is required only if more than one condition is required
+
+if([boolean conditon])
+{
+    // Statement 1
+}
+Else
+{
+    // Statement 2
+}
+
+==================================================
+Integer score=91;
+
+if(score>90)
+{
+    System.debug('Congratulations');
+    System.debug('What is your next cert?'); // curly braces are required if there is > 1 statement
+}
+else //this is optional, only if can be printed
+{
+    System.debug('Work harder');
+}
+
+==================================================
+
+Integer myAge=28, herAge=30;
+
+if(myAge > herAge)
+{ 
+    System.debug('I am older.'); 
+}
+ else 
+{
+     System.debug('She is older.');
+}
+==================================================
+
+IF..ELSE IF statement
+
+first that matches criteria is executed, rest IF ELSE are not executed, only ELSE
+
+if(expresion1)
+{
+    //codes
+}
+else if(expression2)
+{
+    //codes 
+}
+else if(expression3)
+{
+    //codes
+}
+
+else
+{
+    //codes
+}
+
+==================================================
+
+Integer num=0;
+
+if(num >0)
+{
+    System.debug('positive');
+}
+else if (num<0)
+{
+    System.debug('negative');
+}
+else
+{
+    System.debug('zero');
+}
+
+==================================================
+
+Integer place=5;
+
+String medal_color;
+if(place==1)
+{
+    medal_color='gold';
+}
+else if (place==2)
+{
+    medal_color='silver';
+}
+else if (place==3)
+{
+    medal_color='bronze';
+}
+else 
+{
+    medal_color=null;
+}
+if(medal_color!=null)
+System.debug('You have won '+medal_color+' medal.');
+else
+    System.debug('You did not win anything');
+
+===================================================
+
+Integer topScore=90, secondTopScore=85, myScore=60;
+
+if(myScore>topScore)
+{
+    System.debug('highest score');
+}
+else if ((myScore<topScore)&&(myscore>secondTopScore))
+{
+    System.debug('more than second top score');
+}
+else if ((myScore<TopScore) && (myScore<secondTopScore) && (myScore>70))
+{
+    System.debug('You can do better...');
+}
+else
+{
+    System.debug('You are dumb.');
+}
+    
+===================================================
+
+Integer salary=100000;
+Decimal bonus, salaryAfterBonus;
+if (salary>=150000)
+{
+    bonus=0.15;
+}
+else if (salary>=120000)
+{
+    bonus=0.12;
+}
+else if(salary>=100000)
+{
+bonus=0.1;    
+}
+else
+{
+    bonus=0.5;
+}
+salaryAfterBonus=salary+(salary*bonus);
+System.debug('Bonus = '+bonus*100+'%');
+System.debug('Salary After Bonus = '+salaryAfterBonus);
+
+==================================================
+
+Integer score=91;
+
+if(score>90)
+{
+    System.debug('Congratulations');
+    System.debug('What is your next cert?'); // curly braces are required if there is > 1 statement
+}
+else //this is optional, only if can be printed
+{
+    System.debug('Work harder');
+}
+
+Integer myAge=28, herAge=30;
+
+if(myAge > herAge)
+    System.debug('I am older.'); else System.debug('She is older.');
+
+
+==================================================
+6. Switch Statements in APEX with Example
+==================================================
+
+switch on expression{
+    when value1{ // when block 1
+        //code block 1
+    }
+     when value2{ // when block 2
+        //code block 2
+    }
+     when value3{ // when block 3
+        //code block 3
+    }
+     when else{ // default block / optional
+        //code block 4
+    }
+}
+
+=====================================================
+
+Integer num=-3;
+switch on num{
+    when 2{ 
+    System.debug('Value is 2.') ;   
+    }
+    when -3{ 
+    System.debug('Value is -3.') ;   
+    }
+    when else{ 
+    System.debug('Non of those numbers.');
+    }
+}
+
+=====================================================
+
+Integer place=4;
+String medal_color; //null
+switch on place{
+    when 1{ 
+    medal_color='gold' ; 
+    }
+    when 2{ 
+    medal_color='silver' ; 
+    }
+    when 3{ 
+    medal_color='bronze';
+    }
+    when else{ //this block is optional
+    medal_color=null;
+    }
+}
+if (medal_color!=null)
+{
+    System.debug('Congrats, you have won '+medal_color);
+}
+else
+{
+    System.debug('Work harder pussy.');
+}
+
+=====================================================
+
+Integer yourScore=90;
+switch on yourScore
+{
+    when 85, 90, 05, 100{
+        System.debug('1');
+    }
+    when 80,75 { //this will cause error, you can not have multiple values (70) in else statements
+    System.debug('2');
+    }
+    when 70,65{
+    System.debug('3');
+    }
+    when else{
+        System.debug('Work harder.');
+    }
+}
+
+===================================================
+
+Statement is complete line of code that performs action. ends with semicolom ;
+
+Integer num=100 - statement
+
+a=b+1 - statement, b+1 -  expression
+
+===================================================
+7. Loops in APEX
+===================================================
+
+Looping in programming languages is a feature which facilitates the execution of a set of instructions/functions repeatedly while some condition evaluates to true.
+
+There are 3 main types of loop in apex:
+- WHILE Loop
+- FOR loop
+- DO-WHILE loop
+
+WHILE Loop is a control flow statement that allows code to be executed repeatedly based on given boolean condition. The while loop can be taught of as a repeating if statement.
+
+Every time when you want to repeat sth.
+
+while (boolean condition)
+{
+    loop statements...
+}
+
+===============================================
+integer i=5;
+while(i<10 && i>=5)
+{
+    System.debug('Michal Dabrowski');
+    i++; // increment operator
+}
+
+================================================
+
+// display 1 to 10
+integer i=1;
+while(i<10)
+{
+    System.debug('value of '+i);
+    i++; // increment operator
+}
+
+====================================================
+
+// display 1 to 10
+integer i=100;
+while(i<=100 && i>=-100)
+{
+    System.debug('value of '+i);
+    i-=9; 
+/* you can increment or decrement 
+Examples i+=11 increment by 11
+i-=9 decrement by minus 9
+i++
+i--
+*/
+}
+
+=====================================================
+
+FOR Loop provides a concise way of writing the loop structure. Unlike a while loop, a FOR statement consumes the initialization, condition and increment/decrement in one line thereby providing a shorter, easy to debug structure of looping.
+
+FOR (initialization condition, testing condition, increment/decrement)
+{
+statements(s)
+}
+
+=====================================================
+
+for(integer i=1; i<5; i++)
+{
+    System.debug('value of i='+i);
+}
+
+=====================================================
+
+integer salary=100000;
+Decimal bonus, salaryAfterBonus;
+
+for (bonus=5; bonus<=20; bonus+=5)
+{
+    salaryAfterBonus=salary+(salary*(bonus/100));
+    System.debug('Salary after ' +bonus+ '% bonus: '+salaryAfterBonus);
+}
+
+======================================================
+
+FOR (integer i=10; i>=0; i=i-2)
+{
+    System.debug('value of i= '+i);
+}
+
+======================================================
+
+FOR (integer i=1;i>=1;i++)
+{
+    System.debug('value of 1= '+i);
+}
+
+// infinate loop - very bad practice --> System.LimitException: Apex CPU time limit exceeded
+
+======================================================
+
+APEX supports three variations of the for loop:
+
+==== The traditional for loop:
+
+FOR(init_stmt; exit_condition; increment_stmt)
+{
+    code_block
+}
+
+==== The list or set iteration for loop:
+
+FOR (variable : list_or_set)
+{
+    code_block
+}
+
+==== The SOQL for loop:
+
+FOR(variable:[soql_query])
+{
+    code_block
+}
+
+======================================================
+
+List<String> empNames=new List<string> {'Deepika', 'Vivek', 'John', 'Dev', 'Sam'};
+    
+FOR (String empName:empNames)
+{
+ System.debug('Name= '+empName);
+}
+
+List<Integer> empIds=new List<Integer>{100, 110, 120, 130, 140};
+    
+    FOR (integer empId:empIds)
+{
+    System.debug('Emp ids: '+empId);
+}
+
+======================================================
+
+Break and Continue statement in APEX
+- break statement: jumps out of the loop
+- continue statement: breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop
+
+=====================================================
+
+Break
+
+for (integer i=1; i<=10;i++)
+{
+    if (i==5)
+    {
+        break;
+    }
+    System.debug('Value of i= '+i);
+}
+
+Continue
+
+for (integer i=1; i<=10;i++)
+{
+    if (i==5)
+    {
+       continue;
+    }
+    System.debug('Value of i= '+i);
+}
+
+===================================================
+
+// Nested loops: Placing a loop inside another loop is called nested loops.
+
+for(integer a=0; a<=3; a++)
+{
+    for (integer b=0; b<=2; b++)
+    {
+        for (integer c=0; c<=0; c++)
+                {
+        System.debug('a ='+a+' b='+b+' c = '+c); // a3, b2 c0 is the last loop that will be executed, than it moves to a4 that does not meet condition for first for loop
+    }
+    }
+
+}
+
+===================================================
+
+/*Nested bundle MUSISZ PRZEĆWICZYĆ TEN PRZYKŁAD
+1
+22
+333
+4444
+*/
+
+for (integer i=1; i<=4; i++)
+{
+    for (integer j=1; j<=i; j++)
+    {
+        System.debug(i);
+    }
+}    
+   
+======================================================
+
+/*Nested bundle MUSISZ PRZEĆWICZYĆ TEN PRZYKŁAD
+1
+1
+2
+1
+2
+3
+1
+2
+3
+4
+*/
+
+for (integer i=1; i<=4; i++)
+{
+    for (integer j=1; j<=i; j++)
+    {
+        for (integer m=1; m<=i; m++)
+    {
+                SYstem.debug(m);
+    }
+    }
+}
+
+======================================================
+Sekcja 8: Object Oriented Concepts in APEX 
+======================================================
+
+class = blueprint- 
+
+======================================================
+
+public class Dog 
+{
+    public String name;
+    public Integer age;
+    // Instance variables
+    public void disp()
+    {
+        system.debug('Dog name '+name);
+        system.debug('Dog age '+age);
+    }
+}
+
+-----------------------------------------------------
+
+Dog d1=new Dog(); //d2, d1 are remote controllers
+d1.name='Scooby';
+d1.age=12;
+d1.disp();
+
+Dog d2=new Dog();
+d2.name='Tiger';
+d2.age=10;
+d2.disp();
+
+======================================================
+
+public class Employee 
+{
+    public String name;
+    public String designation;
+    public void show()
+    {
+        System.debug('Name: '+name);
+        System.debug('Designation: '+designation);
+    }
+}
+
+------------------------------------------------------
+
+Employee e1=new Employee();
+Employee e2=new Employee();
+
+e1.name='John';
+e1.designation='Senior Manager';
+e2.name='Steve';
+e2.designation='Manager';
+
+e1.show();
+e2.show();
+
+=====================================================
+
+Static and non Static methods
+
+public static void disp() // static
+public void disp() // non-static
+
+-----------------------------------------------------
+public class StaticExample 
+{
+    public static void method1()
+    {
+        System.debug('I am static method.');
+    }
+    public  void method2()
+    {
+        System.debug('I am NON-STATIC method.');
+    }
+}
+------------------------------------------------------
+
+StaticExample.method1();
+// StaticExample.method2(); non-static method will return error, can not be called in this way
+// "Non static method cannot be referenced from a static context: void StaticExample.method2()"
+// for non static you have to create object
+
+StaticExample e=new StaticExample();
+e.method2();
+
+=====================================================
+
+Static and Non-Static variable
+
+Static variable will be shared among all the objects of the class. If is change that it applies to all of the objects accordingly.
+
+-----------------------------------------------------
+public class Cat 
+{
+    public string name;
+    public static integer count;
+}
+-----------------------------------------------------
+
+Cat c1=new Cat(); 
+Cat c2=new Cat();
+c1.name='Kitty';
+c2.name='Puszek';
+Cat.count=1;
+System.debug('c1 name: '+c1.name);
+System.debug('c2 name: '+c2.name);
+Cat.count++;
+System.debug('count value: '+Cat.count);
+
+======================================================
+APEX Access Modifiers
+
+Private - no on outside of the class
+Protected
+Public - inside application
+Global -  even outside the application
+
+Ussually you create variable private and method as public, so you can control values of the variables.
+
+
+
+
+
+public class Cat 
+{
+    private string name; // public/private - this is access modifier
+    private integer size; // after changing to private variable is not visible outside of the class "Variable is not visible: Cat.name"
+    public void setName(String n)
+    {
+        name = n;
+    }
+    
+    
+    public void setSize(Integer s)
+    {if(s<=0)
+    {
+        System.debug('Size can not be lower than 1.');
+        size=10;
+    }
+     else
+     {
+         size=s;
+     }
+    }
+    public void display()
+    {
+       System.debug('Cat name: '+name);
+       System.debug('Cat size: '+size);
+    }
+}
+
+------------------------------------------------------
+
+Cat c1=new Cat();
+// c1.name='Tina';
+// c1.size=0;
+
+c1.setsize(3);
+c1.setName('Tina');
+c1.display();
+
+======================================================
+
+Constructor has the same name as the class. Can have value or doesn't have values.
+
+public class Cat 
+{
+    private String name; // public/private - this is access modifier
+    private Integer size; // after changing to private variable is not visible outside of the class "Variable is not visible: Cat.name"
+    public Cat(String n, Integer s) //APEX constructor
+    {
+        name =n;
+        size = s;
+    }
+    public Cat() // APEX Constructor with predefined values
+    {
+        name='tino';
+        size=10;
+    }
+    public void display()
+    {
+       System.debug('Cat name: '+name);
+       System.debug('Cat size: '+size);
+    }
+}
+
+--------------------------------------------------------
+
+Cat c1=new Cat('Scooby', 13);
+Cat c2=new Cat();
+c2.display();
+c1.display();
+
+========================================================
+
+Inheritance
+
+Put functionality to one class and extend it with different classes according to needs.
+
+--------------------------------------------------------
+
+public virtual class Vehicle  //virtual ??
+{
+    public void model()
+    {
+        System.debug('Model method of vehicle class.');
+    }
+    public virtual void speed()
+    {
+        System.debug('Speed of the vehicle depends in the type of the vehicle.');
+    }
+}
+
+-------------------------------------------------------
+
+public class Truck extends Vehicle
+{
+public override void speed() //override
+{
+    System.debug('Truck has a speed of 50 Miles/hr.');
+}
+}
+
+-------------------------------------------------------
+
+Vehicle v=new Vehicle();
+v.model();
+v.speed();
+Vehicle v2=new Truck();
+v2.model();
+v2.speed();
+
+=======================================================
+9. Collections in APEX (List, Set and Map)
+=======================================================
+A collection represents a group of objects. There are three different types of collections in Apex, and they are:
+
+- List: A list in an ordered collection of the primitive's data types dignified by its index
+
+List <DataType> setName= new Set <DataType>0;
+
+- Set: A set is an unordered colection of data of one primitive data type or sObject that must have unique values
+
+Set<DataType> setName= new Set<DataType>0;
+
+- Map is an unordered collection of unique keys of one primitive data type and their corresponding values.
+
+Map<PrimitiveKeyDataType, DataType> mapName= newMap<PrimitiveKeyDataType, DataType> 
+
+
+Index alwayws starts with the value 0.
+
+========================================================
+
+List<String> myFriends=new List<String> (); // there are more ways to create list // created a list
+myFriends.add('Ajeet');
+myFriends.add('Harry'); // remember, the sequence matters 
+myFriends.add('Rajeef');
+System.debug('My friends '+myFriends);
+myFriends.add(1, 'Henry'); // Harry wont be replaced, but moved to the next position
+System.debug('My new list of friends '+myFriends);
+myFriends.remove(1);
+System.debug('Final list of friends '+myFriends);
+
+========================================================
+
+Integer[] myList=new List<Integer> (); //another way to create list
+List<String> myStrings=new List<String> {'one', 'two', 'three'};
+    System.debug('List has following items' +myStrings);
+myStrings.add('eleven');
+   System.debug('New List has following items' +myStrings);
+myStrings.remove(2);
+   System.debug('Final list:' +myStrings); //after removing index 2 
+System.debug('element at index 1 '+myStrings[1]); // 1st way to retrieve value
+System.debug('element at index 1 '+myStrings.get(1)); // 2nd way to retrieve value 
+
+// size of particular list
+
+    System.debug('Size of my list: ' +myStrings.size());
+
+========================================================
+
+Integer[] myList=new List<Integer> {10,20,30};
+    System.debug('My list has following items '+myList); // 10, 20, 30
+myList.set(0,100); // 10 will be REPLACED with 100
+    System.debug('New list has following items '+myList); // 100, 20, 30
+myList[0]=500;
+    System.debug('New list has following items '+myList); // 500, 20, 30
+myList.add(0,200);
+    System.debug('New list has following items '+myList); // 200, 500, 20, 30
+System.debug('My list size: '+myList.size());
+
+=======================================================
+
+List<String> myList=new List<String>();
+myList.add('Hello');
+myList.add('MyTutorial');
+myList.add('How are you?');
+myList.add(100); // Method does not exist or incorrect signature: void add(Integer) from the type List<String>
+// Incompatible element type Integer for collection of String
+// similarly other way around
+System.debug('My list is: '+myList); 
+
+=======================================================
+
+List<String> colors=new List<String> {'Yellow', 'Green', 'Red'};
+    System.debug('My colors: '+ colors);
+System.debug('Color at index 0: '+colors[0]); // yellow
+System.debug('Color at index 1: '+colors.get(1)); // green, retrived with get method 
+System.debug('Color at index 2: '+colors[2]); // red
+
+// no sort
+
+colors.sort(); // green, red, yellow
+System.debug('Color at index 0 after sorting: '+colors[0]); // green
+System.debug('Color at index 1 after sorting: '+colors.get(1)); // red
+System.debug('Color at index 2 after sorting: '+colors[2]); // yellow
+
+======================================================
+
+List <Integer> myList=new List<Integer> {100,34,80,79};
+    System.debug('my list has following items '+myList); // no sort
+System.debug('No at index 0: '+myList[0]); // 1000
+System.debug('No at index 1: '+myList.get(1)); // 34 
+System.debug('No at index 2: '+myList[2]); // 80
+System.debug('No at index 3: '+myList[3]); // 79
+myList.sort();
+System.debug('No at index 0 after sort: '+myList[0]); // 34
+System.debug('No at index 1 after sort: '+myList.get(1)); // 79 
+System.debug('No at index 2 after sort: '+myList[2]); // 80
+System.debug('No at index 3 after sort: '+myList[3]); // 100
+
+=====================================================
+
+// set has only unique values
+
+Set<String> hset=new Set<String>();
+hset.add('Apple');
+hset.add('Mango');
+hset.add('Grapes');
+hset.add('Orange');
+
+hset.add('Orange'); // there won't be error but value won't be duplicated
+hset.add(null);
+
+System.debug('Elements of my set '+ hset); // list is automatically sorted
+System.debug('Elements of my set '+ hset.size());
+
+=====================================================
+
+// clear method
+
+Set<String> hset=new Set<String>();
+hset.add('element 1');
+hset.add('element 2');
+hset.add('element 3');
+hset.add('element 4');
+hset.add('element 4'); // set always contains unique values
+hset.add('element 5');
+
+System.debug('elements in my set: '+hset);
+System.debug('Size: '+hset.size());
+
+hset.clear(); //remove all elements in the set
+
+System.debug('elements in my set: '+hset);
+System.debug('Size: '+hset.size());
+
+====================================================
+
+Map<String, String> myMap=new Map<String, String> {'a' => 'apple', 'b'=> 'boy'};
+    System.debug('map value for key a '+myMap.get('a'));
+    System.debug('map value for key a '+myMap.get('b'));
+    System.debug('map value for key a '+myMap);
+    // map key-value
+    // use declare a map: type of the key, type for the value
+
+====================================================
+
+Map<Integer, String> newMap=new Map<Integer, String>();
+newMap.put(12, 'Item 12');// 12=> Item 12
+newMap.put(2, 'Item 2'); // In mam put method is used instead of add
+newMap.put(3, 'Item 3');
+newMap.put(44, 'Item 44');
+newMap.put(7, 'Item 7');
+System.debug('Elements in my map: '+newMap);
+
+String var=newMap.get(2); // Item 2
+System.debug('Value of var '+var);
+String stringer=newMap.get(3); // Item 3
+System.debug('Value of stringe '+stringer);
+System.debug('newMap size: '+newMap.size()); //5
+newMap.clear();
+System.debug('newMap size: '+newMap.size()); //0 to confrim .clear() method
+
+=====================================================
+
+Map <integer, String> hmap=new Map<Integer, String>();
+hmap.put(2, 'David');
+hmap.put(56, 'John');
+hmap.put(8, 'Chris');
+hmap.put(9, 'Adam');
+hmap.put(10, 'Adam'); // in a map only KEY can not be duplicated
+
+System.debug('My map: '+hmap); // {2=David, 8=Chris, 9=Adam, 10=Adam, 56=John}
+hmap.put(2, 'David');
+hmap.put(56, 'John');
+hmap.put(8, 'Chris');
+hmap.put(9, 'Adam');
+hmap.put(9, 'Mark'); // won't be displayed
+
+System.debug('My map: '+hmap);// {2=David, 8=Chris, 9=Mark, 10=Adam, 56=John}
+
+====================================================
+
+LIST can be added to the Map
+
+Example 
+Map<Id, List<Opportunity>> MapList= New Map<Id, List<Opportunity>>0;
+
+====================================================
+10: SObjects in Salesforce
+====================================================
+
+An sObject is any object that can be stored in the Force.com platform database. Apex allows the use of generic sObject abstract type to represent any object.
+
+For example, Vehicle is a generic type and Car, Motor, Bike all are concrete types of VEhicle.
+
+In SFDC, sObject is a generic type and Account, Oppty, Custom Obejct are its concrete type.
+
+-------------------------------------------------------
+
+List <Sobject> objects=new List<Sobject>();
+Account acc1=new Account(Name='My Tutorial Rack');
+Opportunity opp2=new Opportunity(Name='My Tutorial Rack Oppty');
+Case cas3=new Case(Status='New', Origin='Phone');
+
+//add the records to the list
+//list of sobject
+
+objects.add(acc1);
+objects.add(opp2);
+objects.add(cas3);
+
+System.debug('Elements in the list '+objects);
+
+======================================================
+11: SOSL and SOQL queries in Salesforce
+======================================================
+
+SOSL
+- Salesforce Object Search Language (SOSL) is a Salesfroce search languange that is used to perform text searches in records;
+- Use  SOSL to search fields across multiple standard and custom object records in Salesforce
+
+FIND {SFDC} IN ALL FIELDS RETURNING
+Account(Name), Contact(FirstName,LastName)
+
+Examples
+FIND {Dickenson} IN ALL FIELDS RETURNING
+Opportunity(Name, id)
+
+Common use case: particular text, apex class, apex code
+
+SOQL
+- Salesforce provides the Salesforce Object Query LAnguage that you can use to read saved records
+- SOQL is similar to SQL but is cutomized for the Lightning platform
+- Because Apex has direct access to Salesforce records that are stored in the database, you can embed SOQL queries in you Apex code and get results in a straightforward fashion
+- When SOQL is embedded in Apex, it is referred to as inline SOQL
+
+SELECT Name, Phone From Account
+
+What is difference between SOQL i SOSL
+
+SOQL
+- only one object at a time
+- any type of field
+- can be used in classes and triggers
+- DML Operation can be performed on query results
+- Return records
+
+SOSL
+- many objects at a time
+- only email, text or Phone
+- can be used in classes but not triggers
+- DML Operation cannot be perfomed on search results
+- Return fields
+
+=====================================================
+12: Exceptions in Salesforce
+=====================================================
+Waht are exceptions?
+Exceptions note errors and other events that disrupt the normal flow code ececution
+
+What happens when an exception occurs?
+
+- when an exception occurs, code execution halts.
+- Any DML operations that were processed before the exception are rolled back and aren't committed to the database
+- Exceptions get logged in debug LocaltimeString
+- For unhandled exceptions, that is, exceptions that the code doesn't catch, Salesforce sends an email that includes the exception information. The end user sees an error message in the Salesforce user interface.
+
+TRY - CATCH - FINALLY Statements
+
+- The try statement identifies a block of code in which an exception can occur.
+- The catch statement identifies a block of code that can handle a particular type of exception
+- A single try statement can have zero or more associated catch statement
+- Each catch statement must have a unique exception type. Also, once a particular exception type is caught in one catch block, the remaining catch blocks, if any, aren't executed
+- The finally statement identifies a block of code that is guaranteed to execute and allows you to clean up your code
+- A single try statement can have up to one associated finally statement
+- Code in the finally block always executes regardless of whether an exception was thrown or the type of exception that was thrown. Because the finally block always executes, use it for clean up code, such as for freeing up resources
+
+Sytax
+
+try {
+    // try block
+    code_block
+} catch (exceptionType variableName) {
+    // Initial catch block.
+    // At least the catch block or the finally block must be present
+    code_ block
+} catch (Exception e){
+    // Optional additional catch statement  for other exception types
+    // Note that the general exception type 'Exception',
+    // must be the last catch block when it is used.
+    code_block
+} finally {
+    // Finally block
+    // At least the catch block or the finally block must be presented
+    code_block 
+}
+
+---------------------------
+
+try {
+    code_block
+} catch (exceptionType variableName) {
+    code_ block
+} 
+// Optional additional catch blocks
+
+---------------------------
+
+try {
+    code_block
+} finally {
+    code_block 
+}
+
+----------------------------
+
+try {
+    // perform some operation that 
+    // might cause an exception
+} catch (Exception e){
+    // Generic exception handling code here
+} finally {
+    // Perform some clean up
+}
+
+======================================================
+
+// creating a new lead record 
+Lead l=new Lead();
+insert l;
+System.debug('Trying to create a new lead record.');
+
+/* 
+--> returns an error Line: 3, Column: 1
+System.DmlException: Insert failed. First exception on row 0; first error: REQUIRED_FIELD_MISSING, Required fields are missing: [LastName, Company]: [LastName, Company]
+*/
+
+---------------------------------------------
+
+try {
+    Lead l=new Lead();
+    insert l;
+}
+catch (DMLException e){
+    System.debug('You have got the following exception: '+e.getMessage()); // getMessage() method
+}
+ 
+System.debug('Trying to create a new lead record.'); // despite the insert fail, this block is executed
+
+=======================================================   
+
+Built-In Exceptions and common methods
+
+Apex provides a number of buil-in exceptions types that the runtime engine throws if errors are encountered during execution.
+
+These are common but not all exceptions:
+
+DMLException 
+ListException - Any problem with a list, such as attempting to access an index that is out of bounds
+NullPointerException - Any problem with dereferencing a null variable
+QueryException - Any problem with SOQL quesries, such as assigning a query that returns no records or more than one record to a single sObject variable
+SObjectException - Any problem with sObject records, such as attempting to change a field in an update statement that can only be changed during insert
+
+=======================================================
+
+List<Integer> li= new List<Integer>();
+li.add(15);
+li.add(2);
+//2 elements
+Integer first=li[0]; //15
+Integer sec=li[4]; // there is no such an element -->  System.ListException: List index out of bounds: 4
+
+System.debug('Element at index 0: '+first);
+
+=======================================================
+
+Integer first, sec;
+
+try
+{
+List<Integer> li=new List<Integer>();
+li.add(15);
+li.add(2);
+//2 elements
+Integer first=li[0]; //15
+Integer sec=li[2]; // there is no such an element -->  System.ListException: List index out of bounds: 4
+}
+catch (ListException e)
+{
+    System.debug('LIST EXCEPTION '+e.getMessage());
+}
+System.debug('Element at index 0: '+first);
+
+======================================================
+
+String s;
+Boolean b=s.contains('abc'); // method contains() in string class, returns boolean value
+System.debug('s contains ABC? '+b); // returns System.NullPointerException: Attempt to de-reference a null object
+
+------------------------------------------------------
+
+String s='hello abc';
+Boolean b;
+try {
+b=s.contains('abc'); // method contains() in string class, returns boolean value
+} catch (NullPointerException e)
+{
+    System.debug('This exception occurs:'+e.getMessage());  
+}
+
+    System.debug('s contains ABC? '+b); 
+
+-----------------------------------------------------
+
+String s;
+Boolean b;
+try {
+b=s.contains('abc'); // ullpointer
+} catch (NullPointerException e)
+{
+    System.debug('This exception occurs:'+e.getMessage());  
+}
+
+-----------------------------------------------------
+
+String s; // This decides whether A or B are executed
+Boolean b;
+try {
+    b=s.contains('abc'); // nullpointer
+    system.debug('Inside of the try block,'); // A
+} catch (NullPointerException e)
+{
+    System.debug('This exception occurs:'+e.getMessage());  
+}
+    system.debug('Outside of the try-catch block,'); // B
+
+=====================================================
+
+try
+{
+   List<Lead> lm= [select Name FROM Lead where name like 'mike%']; // possibilities: no records, one record, multiple records
+    system.debug('size: '+lm.size() +lm);
+   Lead l= [select Name FROM Lead where Name like 'xyz%' Limit 1]; // if this block is outside the try block, you get query exception
+}
+catch (QueryException e)
+{
+    System.debug('The following exception has occured'+e.getMessage());
+}
+
+=====================================================
+
+Account acc=new Account(Name='Shcs Scared');
+insert acc;
+Account v=[SELECT Name FROM Account WHERE Id=: acc.Id ];
+String s=v.Description; // results in sObject exception --> System.SObjectException: SObject row was retrieved via SOQL without querying the requested field: Account.Description
+    System.debug('Fetched account is: '+v);
+
+-----------------------------------------------------
+
+Account acc=new Account(Name='Shcs Scared');
+insert acc;
+Account v=[SELECT Name, Description FROM Account WHERE Id=: acc.Id ];
+String s=v.Description; // no sObject exception because Description is precededly fetched
+    System.debug('Fetched account is: '+v);
+
+-----------------------------------------------------
+
+try
+    {Account acc=new Account(Name='Shcs Scared');
+insert acc;
+Account v=[SELECT Name FROM Account WHERE Id=: acc.Id ];
+String s=v.Description; 
+    System.debug('Fetched account is: '+v);
+    }
+catch (sObjectException soe){
+    System.debug('You have got the following exception: ' +soe.getMessage() );
+}
+
+====================================================
+
+Common Exception Methods
+
+There are other exception methods that are also available. Here are descriptions of some useful methods.
+
+- getCause: returns the cause of the exception as an exception object
+- getLineNumber: returns the line number from where the exception was thrown
+- getMessage: returns the erro message that displays for the user
+- getStackTraceString: returns the stack trace as a string 
+- getTypeName: Returns the type of exception, such as DMLException etc.
+
+try
+    {Account acc=new Account(Name='Shcs Scared');
+insert acc;
+Account v=[SELECT Name FROM Account WHERE Id=: acc.Id ];
+String s=v.Description; 
+    System.debug('Fetched account is: '+v);
+    }
+catch (sObjectException soe){
+    System.debug('Get Message: ' +soe.getMessage() );
+    System.debug('Cause: ' +soe.getCause() );
+        System.debug('LineNumber: ' +soe.getLineNumber() );
+        System.debug('StackTraceString: ' +soe.getStackTraceString() );
+        System.debug('Type Name: ' +soe.getTypeName() );
+}
+
+===========================================================
+
+try{
+
+lead l=[SELECT Name FROM Lead LIMIT 1];
+String des=l.Description; // throw an exception, because not queried
+}
+catch (Exception e)
+{
+    System.debug('Get Message: ' +soe.getMessage() );
+    System.debug('Cause: ' +soe.getCause() );
+        System.debug('LineNumber: ' +soe.getLineNumber() );
+        System.debug('StackTraceString: ' +soe.getStackTraceString() );
+        System.debug('Type Name: ' +soe.getTypeName() );
+}
+
+==========================================================
+
+More Exception Methods
+
+Some Exception types, such as DMLException, have specific methods that apply to only them and aren't common to other exception types.
+
+- getDmlFieldNames(Index of the failed record): returns the names of the fields that caused the error for the specific failed record.
+- getDmlId(Index of the failed record): Returns the ID of the failed record that caused the error for the specified failed record.
+- getDmlMessage(Index of the failed record): Returns the error message for the specified failed record.
+- getNumDml: Returns the number of failed records.
+
+Try
+{
+Account acc1=new Account(Description='HDXx'); // throws an exception
+insert acc1;
+}
+catch (DMLException dmle)
+{
+    System.debug('You have encountered a DML Exception.');
+System.debug(dmle.getDmlFieldNames(0));
+System.debug(dmle.getDmlId(0)); 
+System.debug(dmle.getDmlMessage(0)); 
+System.debug(dmle.getNumDml());     
+}
+
+===========================================================
+
+VERY CLEVER PIECE OF CODE
+
+Account m1=new Account(Name='Coffeemakers', Description='Kitchenware');
+Account m2=new Account();
+Account m3=new Account();
+Account [] mList=new List<Account>();
+mList.add(m1);
+mList.add(m3);
+mList.add(m2);
+
+try{
+    insert mList;
+}
+catch (DMLException dmle){
+      System.debug('You have encountered a DML Exception.');
+
+    Integer failednum=dmle.getNumDml();
+    System.debug('getNumDml= '+failednum);
+    for (Integer i=0; i<failednum;i++)
+    {
+        System.debug(dmle.getDmlFieldNames(i));
+        System.debug(dmle.getDmlMessage(i)); 
+    }
+}
+
+==========================================================
+
+Lead m1=new Lead(LastName='Coffeemakers', Company='Yuo');
+Lead m2=new Lead(LastName='John');
+Lead m3=new Lead(Company='Boop');
+Lead m4=new Lead();
+Lead [] mList=new List<Lead>();
+mList.add(m1);
+mList.add(m2);
+mList.add(m3);
+mList.add(m4);
+try{
+    insert mList;
+}
+catch (DMLException dmle){
+      System.debug('You have encountered a DML Exception.');
+
+    Integer failednum=dmle.getNumDml();
+    System.debug('getNumDml= '+failednum);
+    for (Integer i=0; i<failednum;i++)
+    {
+        System.debug(dmle.getDmlFieldNames(i));
+        System.debug(dmle.getDmlMessage(i)); 
+    }
+    
+}
+
+==========================================================
+
+try {
+    // try block
+    code_block
+} catch (exceptionType variableName) {
+    // Initial catch block.
+    // At least the catch block or the finally block must be present
+    code_ block
+} catch (Exception e){ // generic exception that handle the rest
+    // Optional additional catch statement  for other exception types
+    // Note that the general exception type 'Exception',
+    // must be the last catch block when it is used.
+    code_block
+} finally {
+    // Finally block
+    // At least the catch block or the finally block must be presented
+    code_block 
+}
+
+----------------------------------------------------------
+
+try {
+  Account acc=  [select Name from Account limit 1];
+  String s=acc.site;  // triggers sObject exception
+}
+catch (DMLException dmle)
+{
+    System.debug('This is DML exception: '+dmle.getMessage());
+}
+
+catch (sObjectException soe)
+{
+    System.debug('This is sObject exception: '+soe.getMessage());
+}
+catch (Exception e) //generic exception block. if the block is at the biggining than it will handle ALL exceptions even those listed below
+{
+    System.debug('This is generic exception: '+e.getMessage());
+}
+finally // is executed no matter what, even if no exception
+{
+    System.debug('This is finally block.');
+}
+
+==========================================================
+
+try
+{
+    String s='';
+    Boolean b=s.contains('abc'); //nullpointer exception - this is first in try block so corresponding exception(catch) will be displayed
+    Account a=new Account();
+    insert a; // DML exception
+}
+catch (DMLException dmle)
+{
+    System.debug('DML exception: '+dmle.getMessage());
+}
+catch (sObjectException soe)
+{
+    System.debug('sObject: '+soe.getMessage());
+}
+catch (Exception e)
+{
+    System.debug('Generic exception: '+e.getMessage()); // this exception is triggered: Attempt to de-reference a null object
+}
+
+==========================================================
+
+Create Custom Exceptions (YOU DON'T UNDERSTAND IT!)
+
+To create your custom exception class:
+
+I ofter create custom Exceptions if there is more information that I need to convey instead of just an error message.
+
+Extend the built-in Exception class and
+
+- Make sure your class name ends with the word Exception, such as "MyException" or "PurchaseException".
+- All exception classes extend the system defined base class Exception
+
+public class AccountException extends 
+Exception {
+}
+
+----------------------------------------------------------
+
+public class AccException extends Exception  //extension is added automatically because the system recognizes word 'Exception'
+// all methods available for Exception class are now available for AccException
+{
+    
+}
+
+----------------------------------------------------------
+
+public class AccUtility 
+{
+    public static void mainProcessing()
+    {
+        try{
+       insertAccount(); 
+        } catch(AccException ae)
+        {
+            System.debug('Message: '+ae.getMessage());
+            System.debug('Cause: '+ae.getCause());
+            System.debug('Line number: '+ ae.getLineNUmber());
+        }
+    }
+    public static void insertAccount()
+    {
+        try{
+        Account a=new Account();
+        insert a;
+        }
+        catch (DMLException dmle)
+        {
+            throw new AccException('Account can not be created because Name is missing.'+ dmle);
+        }
+    }
+}
+
+----------------------------------------------------------
+
+AccUtility.mainProcessing();
+
+==========================================================
+13: Advance APEX
+==========================================================
+
+DML - Data Manipulation Language
+
+- insert
+- update
+- delete
+- undelete
+- upsert
+
+Account myAcct=[select Name, id, billingCity from Account where name='DML Account' limit 1];
+myAcct.billingCity='Tuscolasa';
+upsert myAcct; //upsert or update can be used in that case
+
+==========================================================
+
+Account myAcct=[select Name, id, billingCity from Account where name='DML Account' limit 1];
+myAcct.billingCity='Tuscolasa';
+delete myAcct; 
+undelete myAcct;
+
+myAcct.Industry='Chemicals';
+
+upsert myAcct;
+
+-------------------------------------------------
+
+Account myAcct=[select Name, id, billingCity from Account where name='DML Account' ALL ROWS]; // ALL ROWS is necessary to fetch data from bin also
+undelete myAcct; 
+
+==========================================================
+14: Triggers in Salesforce
+==========================================================
+
+Trigger <Name of the Trigger> on Object(events)
+
+Example:
+
+trigger ContactbeforeInsert on Contact (before insert) { //this will work only for new contacts
+
+    for(Contact contact:Trigger.new){
+      contact.description='Contact created by Michał and Deepika';  
+    }
+    
+    
+}
+
+==========================================================
+
+Trigger ContactBeforeUpdate on Contact (before update) { //this will work only for existing contacts
+    for(Contact c:Trigger.new)
+    {
+        c.Description='Contact updated successfully by'+ userInfo.getLastName();
+    }
+    
+}
+
+===========================================================
+
+Trigger ContactBeforeInsertUpdate on Contact (before insert, before update) {
+    
+    for (Contact d:Trigger.new )
+    {
+        if(trigger.isInsert)
+        {
+            d.description='Contact is created by the trigger.';
+        }
+        else if (trigger.isUpdate)
+        {
+            d.description='Contact is updated by the trigger.';
+        }
+            
+    }
+}
+
+=============================================================
+
+trigger ContactBeforeDelete on Contact (before Delete) {
+    for(Contact c:Trigger.old){ // .old = existing contacts
+        if(c.accountId==null)
+        {
+            c.addError('JESTES ZJEBANY, PUKNIJ SIE W ŁEB. You can not delete this contact record.');
+        }
+    }
+}
+
+=============================================================
+
+What is the difference between  "Trigger.NEW" and "TRIGGER.OLD"?
+
+- Trigger.new: Returns a list of the new versions of the sObject records. Note that this sObject list is only available in insert and update triggers, and the records can only be modified in before triggers.
+
+- Trigger.old: Returns a list of the old versions of the sObject records. Note that this is only available in update and delete triggers.
+
+=============================================================
+
+Trigger changeProCode on Product2 (before insert) 
+{
+    List<Product2> productList=trigger.new; //newer version of the records
+    for(product2 pro:productList)
+    {
+        if(pro.productCode!=null && pro.productCode!='')
+        {
+            pro.productCode='XYZ-'+pro.productCode;
+        }
+    }
+}
+
+/*
+MY TRIGGER FOR THE TASK
+( Trigger ProductAfterUpdate on Product2 (after update)
+{
+    for(Product p:trigger.old)
+        {
+            s.description='XYZ-'+p.description;
+        }
+}
+*/
+
+=================================================================
+
+93. TRIGGER OLD WITH EXAMPLE  - zrób jako test, powtórka całości materiału na tym etapie
+
+=================================================================
+
+Trailhead Example
+
+trigger ContextExampleTrigger on Account (before insert, after insert, after delete) {
+    if (Trigger.isInsert) {
+        if (Trigger.isBefore) {
+            // Process before insert
+        } else if (Trigger.isAfter) {
+            // Process after insert
+        }        
+    }
+    else if (Trigger.isDelete) {
+        // Process after delete
+    }
+}
+
+
+===============================================================
+Sekcja 15: Apex Transactions in Salesforce
+===============================================================
+
+An APEX transaction represents a set of operations that are executed as a single unit.
+
+All the DML operations in a transaction either complete successfully, or if an error occurs i saving a record, then the entire transaction is rolled back.
+
+===============================================================
+
+public class APEXTransactionExample {
+static public void InsertLeadAndAccount(String AccName, String LeadName, String LeadCompany, String Title)
+{
+    Account a=new Account(Name=AccName);
+        insert a;
+    Id AccId=a.id;
+    Lead l1=new Lead(LastName=LeadName, Company=LeadCompany);
+        insert l1;
+    Lead l2=new Lead(LastName=LeadName, Company='MyTutorialRack', Title=AccID);
+        insert l2;
+    Contact c1=new Contact(LastName=LeadName, AccountId=a.Id);
+        insert c1;
+}
+}
+
+// there are 4 transactions. if only one fails , for example because of validation rule, than all transactions will be rolled back
+-------------------------------------------------------
+
+APEXTransactionExample.InsertLeadAndAccount('Pizza Portal', 'Don Pepe', 'NYC ','Pizza Delivery Guy');
+
+-------------------------------------------------------
+
+What is Batch APEX? What are the different methods of Batch Apex Class?
+
+Batch Apex is used to run large jobs (think thousands or millions of records!) that would exceed normal processing limits.
+Using Batch Apex, you can process records asynchronously in batches (hence the name, "Batch APEX") to stay within platform limits.
+
+If you have a lot of records to process, for example, data cleansing or archiving, Batch Apex is probably your best solution.
+
+Advantages of Batch Apex
+
+- Every transaction starts with a new set of governor limits, making it easier to ensure that your code stays within the governor execution limits.
+- If one batch fails to process successfully, all other successful batch transactions aren't rolled back
+
+-----------------------------------------------
+
+Batch APEX Syntax
+
+To write a Batch Apex class, your class must implement the Database.Batchable interface and implements these three methods:
+-Start method: Used to collect the records or objects to be passed to the interface method execute for processing. This method is called once at the beginning of a Batch Apex job and returns either a Database.QueryLocator object or an Iterable that contains the records or objects passed to the job.
+
+global (Database.QueryLocator | Iterable<sObject>) start(Database.BatchableContext bc) {}
+
+- Execute method: Performs the actual processing for each chunk or "batch" of data passed to the method. The default batch size is 200 records.
+
+global void execute(Database.BatchableContext BC, list<P>){}
+
+- Finish method: used to execute post-processing operations (for example, sending an email) and is called once after all batches are processed.
+
+global void finish(Database.BatchableContext BC){}
+
+---------------------------------------------------------
+
+global class UpdateContactAddInfo implements Database.Batchable<sObject>
+{
+    global Database.QueryLocator start(Database.BatchableContext bc)
+    {
+        return Database.getQueryLocator(
+           'SELECT ID, BillingStreet, BillingCity, BillingState, ' +
+            'BillingPostalCode, (SELECT ID, MailingStreet, MailingCity, ' +
+            'MailingState, MailingPostalCode FROM Contacts) FROM Account ' + 
+            'Where BillingState = \'TX\''
+             );
+    }
+    global void execute(Database.BatchableContext bc,List<Account> scope)
+    {
+        List<Contact> contacts=new List<Contact>();
+        for(Account account:scope)
+        {
+            for(Contact contact:account.contacts)
+            {
+                contact.MailingStreet=account.BillingStreet;
+                contact.MailingCity=account.BillingCity;
+                contact.MailingState=account.BillingState;
+                contact.MailingPostalCode=account.BillingPostalCode;
+                contacts.add(contact);
+   
+            }
+        }
+        update contacts;
+            
+    }
+    global void finish(Database.BatchableContext bc)
+    {
+        
+    }
+}
+
+----------------------------------------------
+
+UpdateContactAddressInfo u=new UpdateContactAddressInfo();
+Database.executeBatch(u);
+
+=========================================================
+
+How you get more than 50000 records in Trigger?
+
+You should look at using Batch Apex to acomplish your goals.
+You cannot retrive more than 50000 records in your SOQL calls in a single context because it will hit the governor limits.
+
+However, with Batch Apex your logic will be processed in chunks of anywhere from 1 to 200 records in a batch.
+
+You'd need to modify your business logic to take the batching into account if necessary.
+
+-----------------------------------------------------------
+
+Using State in Batch Apex
+
+-Batch Apex is typically stateless
+-Each execution of a batch Apex job is considered a discrete transaction. For example, a batch Apex job that contains 1000 reocords and uses the default batch size is considered five transactions of 200 records each.
+-In order to make Batch Apex stateful, you need to implement Database.Stateful interface
+-Only instance memner variables retain their values between transactions.
+-Maintaining state is useful for conting or summarizing records as they're processed.
+
+============================================================
+16: Salesforce Web Services
+============================================================
+
+How you can expose your Apex Class as a Web Service?
+-You can expose your Apex class and mehods so that external applications can acces your code
+-You can expose your Apex class methods as a REST or SOAP web service operation
+
+REST - Representational State Transfer
+SOAP - Simple Object Access Protocol
+
+URI - Unique Resource Identifier
+-----------------------------------------------------------
+
+Expose a Class as a REST Service
+
+- define your class as global
+- define methods as global static
+- add annotations to the class and methods
+
+@RestResource(urlMapping=/'Account/*')
+global with sharing class MyRestResource {
+    @HttpGet
+    global with sharing class MyRestResource {
+        // Add your code
+    }
+}
+
+------------------------------------------------------------
+
+HTTP Methods
+@HttpGet - Read - Reads or retrieves records
+@HttpPost - Create - Create records
+@HttpDelete - Delete - Delete records
+@HttpPut - Upsert - Typically used to update exisiting records or create records
+@HttpPatch - Update - Typically used to update fields in existing records
+
+------------------------------------------------------------
+
+Expose a Class as a SOAP Service
+
+- define your class as a global
+- add the webservice keyword and the static definition modifier to each method you want to expose
+
+
+global with sharing class MySOAPWebService {
+    webservice static Account getRecord (String, Id) {
+        // Add your code
+    }
+}
+
+============================================================
+
+@RestResource(urlMapping='/Cases/*')
+global with sharing class CaseManager {
+@HttpGet
+    global static Case getCaseByID(){
+        RestRequest request=RestContext.request;
+        String caseId=request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
+        Case result=[Select CaseNumber, Subject, Status, Origin, Priority FROM Case Where ID=:caseId LIMIT 1];
+        return result;    
+    }
+}
+
+============================================================
+17: Apex REST Methods
+============================================================
+
+@RestResource(urlMapping='/Cases/*')
+global with sharing class CaseManager {
+@HttpGet
+    global static Case getCaseByID(){
+        RestRequest request=RestContext.request;
+        String caseId=request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
+        Case result=[Select CaseNumber, Subject, Status, Origin, Priority FROM Case Where ID=:caseId LIMIT 1];
+        return result;    
+    }
+}
+-------------------------------------------------------------
+
+//Apex Class
+
+@RestResource(urlMapping='/Accounts/*/contacts')
+global with sharing class AccountManager{
+    @HttpGet
+    global static Account getAccount(){
+        RestRequest request = RestContext.request;
+        String accountId = request.requestURI.substringBetween('Accounts/','/contacts');
+        system.debug(accountId);
+        Account objAccount = [SELECT Id,Name,(SELECT Id,Name FROM Contacts) FROM Account WHERE Id = :accountId ];
+        return objAccount;
+    }
+}
+
+==============================================================
+
+JSON
+
+{
+"sub"="This is the case"'
+"sta"="New",
+"ori"="Web"
+"pri"="Mega High"
+}
+
+==============================================================
+
+@RestResource(urlMapping='/Cases/*')
+global with sharing class CaseManager {
+@HttpGet
+    global static Case getCaseByID(){
+        RestRequest request=RestContext.request;
+        String caseId=request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
+        Case result=[Select CaseNumber, Subject, Status, Origin, Priority FROM Case Where ID=:caseId LIMIT 1];
+        return result;    
+    }
+    
+@HttpPost
+    global static ID createCase(String subj, String sta, String ori, String pri)
+    {
+        Case thisCase=new Case(Subject=subj, Status=sta, Origin=ori, Priority=pri);
+        insert thisCase;
+        return thisCase.Id;
+    }
+
+@HttpDelete
+    global static void deleteCase()
+    {
+        RestRequest request=RestContext.request;
+        String caseId= request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
+        Case thisCase=[Select ID from CASE where id=:caseId];
+        delete thisCase;
+    }
+    
+@HttpPut
+    global static ID upsertCase(String subj, String sta, String ori, String pri, String id)
+    {
+               Case ThisCase= new Case(Subject=subj, Status=sta, Origin=ori, Priority=pri, Id=id);
+               upsert ThisCase;
+            return ThisCase.Id;
+    }
+ 
+@HttpPatch // najbardziej skomplikowany przykład
+    global static ID updateCaseFields()
+    {
+        RestRequest request=RestContext.request;
+        String caseId=request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
+        Case thisCase= [SELECT Id from Case where ID=:caseId];
+        Map<String,Object> params=(Map<String,Object>) JSON.deserializeUntyped(request.requestBody.toString());
+            for(String fieldName:params.keySet())
+            {
+                thisCase.put(fieldName, params.get(fieldName));
+            }
+        update thisCase;
+        return thisCase.id;
+    }
+    /*
+Workbench input
+{
+
+"priority": "Chuj w Cipe"
+
+}
+
+if there was a Put method than "pri" is expected according to definition in @HttpPut
+        */
+        
+
+}
+
+==============================================================
+18: Apex Test Classes
+==============================================================
+
+Why do we need to write test classes? How to identify if class is a test class?
+
+- Test classes and test methods verify whether a particular piece of code is working properly or not.If that piece of code fails, then developers .testers can accurately locate the class having the faulty bug.
+- Test classes can be determined easily because every test class will be annotated with @isTest keyword
+- in fact, if we do not annotate a test class @isTest,then it cannot be defined as a test class. Similarly, any method within a class which has the keyword:testMethod,is a tedt method
+
+Benefits of Apex unit test
+- ensuring that your Apex classes and triggers work as expected
+- having a suite of regression tests that can be rerun every time classes anf triggers are updated to ensure that future updates you make to your app don't break existing functionality
+- meeting the code coverage requirements for deploying Apex to production or distributing Apex to customers via packages
+- high-quality apps delivered to the production org, which makes productionusers more productive
+
+What is minimum test coverage required for trigger to deploy?
+In Salesforce, if you want to deploy your code to production, then you must make sure that at least 75% of your Apex code is covered by unit tests. And all these tests must complate succesfully.
+
+Test Method Syntax
+Test methods take no arguments and havethe following syntax:
+
+@isTest static void testName(){
+    //code_block
+}
+
+Alternative, a test method can have this syntax:
+
+static testMethod void testName() {
+    // code_block
+}
+
+Test methods must be defined in test classes, which are classes annotated with isTest annotation.
+
+@isTest
+private class MyTestClass{
+    @isTest static void myTest() {
+        //code_block 
+    }
+}
+
+===============================================================
+
+public class TemperatureConvertor 
+{
+    public static Decimal FahrenheitToCelsius(Decimal fh)
+    {
+        Decimal cs=(fh-32)*5/9;
+        System.debug('temperature in Celsius: '+cs.setScale(2));
+        return cs.setScale(2);
+    }
+}
+
+---------------------------------------------------------------
+
+@isTest
+public class TemperatureCovnertorTest 
+{
+    @isTest static void testWarmTemp()
+    {
+       Decimal celsius=TemperatureConvertor.FahrenheitToCelsius(70);
+       System.assertEquals(21.11, celsius);
+    }
+    
+    @isTest static void testFreezingPoint()
+    {
+        Decimal celsius=TemperatureConvertor.FahrenheitToCelsius(32);
+        System.assertEquals(10, celsius, 'Freezing point temperature is not as expected.');
+    }
+    
+    @isTest static void testBoilingPoint()
+    {
+        Decimal celsius=TemperatureConvertor.FahrenheitToCelsius(212);
+        System.assertEquals(100,celsius, 'Boiling point temperature is not as expected.');
+    }
+    
+     @isTest static void testNegativeTemperature()
+    {
+        Decimal celsius=TemperatureConvertor.FahrenheitToCelsius(-10);
+        System.assertEquals(-23.33,celsius, 'Negative temperature is not as expected.');
+    }
+}
+
+==============================================================
+Increase Your Code Coverage
+
+When writing tests, try to achive the highest code coverage possible. Don't just aim for 75% coverage, which is the lowest coverage that the Force.com platform requires for deployments and packages.
+
+
+
+
+
+
+
+
+
+
+
+
+===============================================================
+
+Schema.DescribeFieldResult O=Opportunity.StageName.getDescribe();
+List<Schema.PicklistEntry> P = O.getPicklistValues();
+
+
+for(Schema.PicklistEntry pickVal:P){
+    System.debug(pickVal.getLabel());
+}
+    
+
+
+=======================
+KEY KONCEPTS
+=======================
+code - precise set of instructions for performing a specific action
+Pseudocode
+Variable
+Data types - all
+Syntax - he way that text and punctuation are arranged to create a programming language is called syntax
+Statement - 
+Collections - all, write quick exaple, use of collections, differences, collection methods , how to refenece indexed item
+
+Declare precise size list - example
+Expression operators
+Assignment operators
+logical operators
+Conditional Statements - list all, syntax, use cases (if else, if else if, switch); 
+Loops - list all (while, do while, for), schema 
+
+
+
+
+
+
+
+=======================
+LIBRARY
+=======================
+
+
+APEX Training - Platform developer
+
+=========================
+DESIGN PATTERNS
+=========================
+
+1. Bulk Design Pattern
+DML statement should be taken outside of the loop, all records put on the list, and DML statement should put the list. This will trigger only 1 DML statement instead of many statements.
+
+CustomerStatusTrigger on APEX_Customer__c (after update) {
+
+    List<Apex_invoice__c> invoiceList=new List<Apex_invoice__c>();
+    for(APEX_Customer__c objCustomer:Trigger.New){
+        if(objCustomer.Apex_customer_status__c=='Active' && trigger.OldMap.get(objCustomer.Id).Apex_customer_status__c=='Inactive')
+        {
+            Apex_invoice__c objInvoice=new Apex_invoice__c();
+            objInvoice.apex_status__c='Pending';
+            objInvoice.APEX_Customer__c=objCustomer.Id;
+            invoiceList.add(objInvoice);
+        }
+    }   
+    insert invoiceList; 
+}
+
+=========================
+APEX Triggers
+=========================
+
+    Trigger simpleTrigger on Account (after insert) {
+        for (Account a : Trigger.new) {
+            // Iterate over each sObject
+        }
+     
+        // This single query finds every contact that is associated with any of the
+        // triggering accounts. Note that although Trigger.new is a collection of  
+        // records, when used as a bind variable in a SOQL query, Apex automatically
+        // transforms the list of records into a list of corresponding Ids.
+        Contact[] cons = [SELECT LastName FROM Contact
+                          WHERE AccountId IN :Trigger.new];
+    }
+
+==========================
+    trigger myAccountTrigger on Account(before delete, before insert, before update, 
+                                        after delete, after insert, after update) {
+    if (Trigger.isBefore) {
+        if (Trigger.isDelete) {
+     
+            // In a before delete trigger, the trigger accesses the records that will be
+            // deleted with the Trigger.old list.
+            for (Account a : Trigger.old) {
+                if (a.name != 'okToDelete') {
+                    a.addError('You can\'t delete this record!');
+                } 
+            }
+        } else {
+     
+        // In before insert or before update triggers, the trigger accesses the new records
+        // with the Trigger.new list.
+            for (Account a : Trigger.new) {
+                if (a.name == 'bad') {
+                    a.name.addError('Bad name');
+                }
+        }
+        if (Trigger.isInsert) {
+            for (Account a : Trigger.new) {
+                System.assertEquals('xxx', a.accountNumber); 
+                System.assertEquals('industry', a.industry); 
+                System.assertEquals(100, a.numberofemployees);
+                System.assertEquals(100.0, a.annualrevenue);
+                a.accountNumber = 'yyy';
+            }
+     
+    // If the trigger is not a before trigger, it must be an after trigger.
+    } else {
+        if (Trigger.isInsert) {
+            List<Contact> contacts = new List<Contact>();
+            for (Account a : Trigger.new) {        
+                if(a.Name == 'makeContact') {
+                    contacts.add(new Contact (LastName = a.Name,
+                                              AccountId = a.Id));
+                }
+            } 
+          insert contacts;
+        }
+      }
+    }}}
+
+
+    trigger AddRelatedRecord on Account(after insert, after update) {
+    List<Opportunity> oppList = new List<Opportunity>();
+    
+    // Get the related opportunities for the accounts in this trigger
+    Map<Id,Account> acctsWithOpps = new Map<Id,Account>(
+        [SELECT Id,(SELECT Id FROM Opportunities) FROM Account WHERE Id IN :Trigger.New]);
+    
+    // Add an opportunity for each account if it doesn't already have one.
+    // Iterate through each account.
+    for(Account a : Trigger.New) {
+        System.debug('acctsWithOpps.get(a.Id).Opportunities.size()=' + acctsWithOpps.get(a.Id).Opportunities.size());
+        // Check if the account already has a related opportunity.
+        if (acctsWithOpps.get(a.Id).Opportunities.size() == 0) {
+            // If it doesn't, add a default opportunity
+            oppList.add(new Opportunity(Name=a.Name + ' Opportunity',
+                                       StageName='Prospecting',
+                                       CloseDate=System.today().addMonths(1),
+                                       AccountId=a.Id));
+        }           
+    }
+    if (oppList.size() > 0) {
+        insert oppList;
+    }
+}
+
+===========================================================
+
+Moje :) złe
+
+trigger BeforeDeleteTrigger on Account (before delete){
+
+Map <Id, Account> accts = new Map<Id, Account>([SELECT ID from Account where Id IN (Select AccoundID From Opportunity) AND  Id IN Trigger.Old])
+
+for (Account a:trigger.Old){
+
+    if (accts.get(a.Id).Opportunities.size!=0){
+
+        Trigger.oldMap.get(a.Id).addError(
+        'Cannot delete account with related opportunities.');
+
+    }
+
+}
+
+}
+
+=======================================>
+trigger AccountDeletion on Account (before delete) {
+   
+    // Prevent the deletion of accounts if they have related opportunities.
+    for (Account a : [SELECT Id FROM Account
+                     WHERE Id IN (SELECT AccountId FROM Opportunity) AND
+                     Id IN :Trigger.old]) {
+        Trigger.oldMap.get(a.Id).addError(
+            'Cannot delete account with related opportunities.');
+    }
+    
+}
+
+========================================
+zakładaj że będzię więcej niż jeden rekord
+
+źle 
+
+trigger MyTriggerNotBulk on Account(before insert) {
+    Account a = Trigger.New[0];
+    a.Description = 'New description';
+}
+
+moja próba--> Udało się :D
+
+trigger MyTriggerNotBulk on Account (before insert) {
+    for (Account a : Trigger.New){
+        a.Description = 'New description';
+    }
+}
+
+============================================
+źle
+
+
+trigger SoqlTriggerNotBulk on Account(after update) {   
+    for(Account a : Trigger.New) {
+        // Get child records for each account
+        // Inefficient SOQL query as it runs once for each account!
+        Opportunity[] opps = [SELECT Id,Name,CloseDate 
+                             FROM Opportunity WHERE AccountId=:a.Id];
+        
+        // Do some other processing
+    }
+}
+--------------------------------------
+moja próba --> też źle :/
+
+trigger SoqlTriggerNotBulk on Account (after update) {
+ Opportunity[] opps = [SELECT Id,Name,CloseDate 
+                             FROM Opportunity WHERE AccountId=:Trigger.New]
+ 
+ for(Account a : Trigger.New) {
+
+        // Do some other processing
+    }
+
+}
+---------------------------------------------------
+
+tak dobrze :)
+
+trigger SoqlTriggerBulk on Account(after update) {  
+    // Perform SOQL query once.    
+    // Get the accounts and their related opportunities.
+    List<Account> acctsWithOpps = 
+        [SELECT Id,(SELECT Id,Name,CloseDate FROM Opportunities) 
+         FROM Account WHERE Id IN :Trigger.New];
+  
+    // Iterate over the returned accounts    
+    for(Account a : acctsWithOpps) { 
+        Opportunity[] relatedOpps = a.Opportunities;  
+        // Do some other processing
+    }
+}
+-----------------------------------------
+tak też dobrze gdy potrzebujesz tylko related opportunity
+
+trigger SoqlTriggerBulk on Account(after update) {  
+    // Perform SOQL query once.    
+    // Get the related opportunities for the accounts in this trigger.
+    List<Opportunity> relatedOpps = [SELECT Id,Name,CloseDate FROM Opportunity
+        WHERE AccountId IN :Trigger.New];
+  
+    // Iterate over the related opportunities    
+    for(Opportunity opp : relatedOpps) { 
+        // Do some other processing
+    }
+}
+
+-----------------------------------------
+
+możesz to jeszcze zredukować, wygląda bardziej elegancko
+
+trigger SoqlTriggerBulk on Account(after update) {  
+    // Perform SOQL query once.    
+    // Get the related opportunities for the accounts in this trigger,
+    // and iterate over those records.
+    for(Opportunity opp : [SELECT Id,Name,CloseDate FROM Opportunity
+        WHERE AccountId IN :Trigger.New]) {
+  
+        // Do some other processing
+    }
+}
+
+==========================================
+
+DML calls  najlepiej wykonywać na collections
+
+źle
+
+trigger DmlTriggerNotBulk on Account(after update) {   
+    // Get the related opportunities for the accounts in this trigger.        
+    List<Opportunity> relatedOpps = [SELECT Id,Name,Probability FROM Opportunity
+        WHERE AccountId IN :Trigger.New];          
+    // Iterate over the related opportunities
+    for(Opportunity opp : relatedOpps) {      
+        // Update the description when probability is greater 
+        // than 50% but less than 100% 
+        if ((opp.Probability >= 50) && (opp.Probability < 100)) {
+            opp.Description = 'New description for opportunity.';
+            // Update once for each opportunity -- not efficient!
+            update opp;
+        }
+    }    
+}
+
+
+-----------------------------------
+
+moja próba --> perfekcyjnie :D
+
+trigger DmlTriggerNotBulk on Account(after update) {   
+    // Get the related opportunities for the accounts in this trigger.        
+    List<Opportunity> relatedOpps = [SELECT Id,Name,Probability FROM Opportunity
+        WHERE AccountId IN :Trigger.New];   
+    List<Opportunity> OppsToUpdate = new List<Opportunity>();     
+    // Iterate over the related opportunities
+    for(Opportunity opp : relatedOpps) {      
+        // Update the description when probability is greater 
+        // than 50% but less than 100% 
+        if ((opp.Probability >= 50) && (opp.Probability < 100)) {
+            opp.Description = 'New description for opportunity.';
+            // Update once for each opportunity -- not efficient!
+            OppsToUpdate.add(opp);
+        }
+    }
+    update OppsToUpdate;    
+}
+
+============================================================
+
+/* trigger AddRelatedRecord on Account (after update, after insert) {
+        Account[] accountsList = [SELECT Id, Name,(
+        						SELECT Id FROM Opportunities where AccountID IN : Trigger.New) 
+                                FROM Account Where ID IN : Trigger.New];
+        List <Opportunity> oppsToInsert = new List<Opportunity>();
+        for (Account a : accountsList){
+            if(a.Opportunities.size()==0){
+                Opportunity opp = new Opportunity(Name=a.Name + ' Opportunity',
+                                   StageName='Prospecting',
+                                   CloseDate=System.today().addMonths(1),
+                                   AccountId=a.Id);
+                    oppsToInsert.add(opp);
+            }
+        }
+    insert oppsToInsert;
+}
+*/
+
+trigger AddRelatedRecord on Account (after update, after insert) {
+        List <Opportunity> oppsToInsert = new List<Opportunity>();
+        for (Account a : [SELECT Id,Name FROM Account WHERE Id IN :Trigger.New AND
+                         Id NOT IN (SELECT AccountId FROM Opportunity)]){                          
+                
+                oppsToInsert.add(new Opportunity(Name=a.Name + ' Opportunity',
+                                   StageName='Prospecting',
+                                   CloseDate=System.today().addMonths(1),
+                                   AccountId=a.Id));
+            }
+		if(oppsToInsert.size() >0){ // do not perform DML operations if there is no records
+    		insert oppsToInsert;
+        }        
+}
+
+
+============================================
+
+trigger ClosedOpportunityTrigger on Opportunity (after insert, after update) {
+    List<Task> taskList = new List <Task>();
+    for (Opportunity opp: [SELECT Id FROM Opportunity WHERE StageName = 'Closed Won' AND Id IN : Trigger.New])
+    {
+        taskList.add(new Task(
+        Subject='Follow Up Test Task',
+        WhatId=opp.Id,
+        ActivityDate=date.today(),
+        Status ='In progress'
+        ));
+        
+    }
+		if(taskList.size()>0){
+		   insert taskList;
+		}
+}
